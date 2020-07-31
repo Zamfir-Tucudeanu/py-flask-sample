@@ -1,6 +1,6 @@
-from flask import Flask
+from flask import Flask 
+from flask_restful import Api, Resource
 import subprocess
-import json
 
 
 def get_cpu():
@@ -11,7 +11,7 @@ def get_cpu():
 
     cpudict = dict(cpuvendor=cpu_vendor, cpumodel=cpu_model, cpucores=cpu_cores)
     #print(json.dumps(cpudict))
-    return json.dumps(cpudict)
+    return cpudict
 
 def get_mem():
     # memory:
@@ -22,7 +22,7 @@ def get_mem():
 
     memdict = dict(memorytotal=mem_total, memfree=mem_free, swaptotal=swap_total, swapfree=swap_free)
     #print(json.dumps(memdict))
-    return json.dumps(memdict)
+    return memdict
 
 def get_net():
     # my public image
@@ -40,25 +40,30 @@ def get_os():
 
     osdict = dict(os=os_os, kernel=os_kernel, hw=os_hw, proc=os_proc, node=os_node)
     #print(json.dumps(osdict))
-    return json.dumps(osdict)
+    return osdict
+
+def default(message):
+    return {"message": message}
 
 
 app = Flask(__name__)
+api = Api(app)
 
 @app.route('/')
 def root():
     supported = "os|OS|mem|MEM|net|NET|cpu|CPU"
-    return "Please use one of supported: " + supported
+    return default(supported)
 
-@app.route('/<req>', methods=['GET', 'POST'])
+@app.route('/<string:req>', methods=['GET', 'POST'])
 def get_info(req):
     supported = "os|OS|mem|MEM|net|NET|cpu|CPU"
     if req.lower() == 'cpu': return get_cpu()
     if req.lower() == 'mem': return get_mem()
     if req.lower() == 'net': return get_net()
     if req.lower() == 'os': return get_os()
-    if req not in supported: return "Information not available. Please use one of supported: " + supported
+    if req not in supported: return default(supported)
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    #app.run(debug=True, host='127.0.0.1', port=5000)
+    app.run(host='0.0.0.0', port=5000)
