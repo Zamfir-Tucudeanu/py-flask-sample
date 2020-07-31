@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restful import Api, Resource
 import subprocess
 import json
+import pprint
 
 
 def get_cpu():
@@ -40,7 +41,6 @@ def get_os():
     os_node = str(subprocess.getoutput('uname -n'))
 
     osdict = dict(os=os_os, kernel=os_kernel, hw=os_hw, proc=os_proc, node=os_node)
-    #print(json.dumps(osdict))
     return json.dumps(osdict)
 
 def default(message):
@@ -66,5 +66,7 @@ def get_info(req):
 
 
 if __name__ == "__main__":
+    # dev
     #app.run(debug=True, host='127.0.0.1', port=5000)
+    # prod
     app.run(host='0.0.0.0', port=5000)
