@@ -1,7 +1,6 @@
 from flask import Flask
 import subprocess
 import json
-import pprint
 
 
 def get_net():

@@ -9,7 +9,7 @@ COPY . ./
 
 # Install production dependencies.
 RUN apk add --no-cache curl
-RUN pip install Flask flasked gunicorn
+RUN pip install Flask gunicorn
 
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
