@@ -1,6 +1,7 @@
 from flask import Flask 
 from flask_restful import Api, Resource
 import subprocess
+import json
 
 
 def get_cpu():
@@ -11,7 +12,7 @@ def get_cpu():
 
     cpudict = dict(cpuvendor=cpu_vendor, cpumodel=cpu_model, cpucores=cpu_cores)
     #print(json.dumps(cpudict))
-    return cpudict
+    return json.dumps(cpudict)
 
 def get_mem():
     # memory:
@@ -22,10 +23,10 @@ def get_mem():
 
     memdict = dict(memorytotal=mem_total, memfree=mem_free, swaptotal=swap_total, swapfree=swap_free)
     #print(json.dumps(memdict))
-    return memdict
+    return json.dumps(memdict)
 
 def get_net():
-    # my public image
+    # how people sees us
     net_info = subprocess.getoutput('curl -s ifconfig.me/all.json')
     #print(net_info)
     return net_info
@@ -40,10 +41,10 @@ def get_os():
 
     osdict = dict(os=os_os, kernel=os_kernel, hw=os_hw, proc=os_proc, node=os_node)
     #print(json.dumps(osdict))
-    return osdict
+    return json.dumps(osdict)
 
 def default(message):
-    return {"message": message}
+    return {"message ": message}
 
 
 app = Flask(__name__)
