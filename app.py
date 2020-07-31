@@ -1,9 +1,14 @@
-from flask import Flask 
-from flask_restful import Api, Resource
+from flask import Flask
 import subprocess
 import json
 import pprint
 
+
+def get_net():
+    # how people sees us
+    net_info = subprocess.getoutput('curl -s ifconfig.me/all.json')
+    #print(net_info)
+    return net_info
 
 def get_cpu():
     # cpu:
@@ -26,12 +31,6 @@ def get_mem():
     #print(json.dumps(memdict))
     return json.dumps(memdict)
 
-def get_net():
-    # how people sees us
-    net_info = subprocess.getoutput('curl -s ifconfig.me/all.json')
-    #print(net_info)
-    return net_info
-
 def get_os():
     # os info
     os_os = str(subprocess.getoutput('uname -o'))
@@ -48,7 +47,6 @@ def default(message):
 
 
 app = Flask(__name__)
-api = Api(app)
 
 @app.route('/')
 def root():
