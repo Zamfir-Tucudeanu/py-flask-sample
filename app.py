@@ -7,7 +7,7 @@ def get_net():
     # how people sees us
     net_info = subprocess.getoutput('curl -s ifconfig.me/all.json')
     #print(net_info)
-    return net_info
+    return dict(json.loads((net_info)))
 
 def get_cpu():
     # cpu:
@@ -17,7 +17,8 @@ def get_cpu():
 
     cpudict = dict(cpuvendor=cpu_vendor, cpumodel=cpu_model, cpucores=cpu_cores)
     #print(json.dumps(cpudict))
-    return json.dumps(cpudict)
+    #return json.dumps(cpudict)
+    return cpudict
 
 def get_mem():
     # memory:
@@ -28,7 +29,8 @@ def get_mem():
 
     memdict = dict(memorytotal=mem_total, memfree=mem_free, swaptotal=swap_total, swapfree=swap_free)
     #print(json.dumps(memdict))
-    return json.dumps(memdict)
+    #return json.dumps(memdict)
+    return memdict
 
 def get_os():
     # os info
@@ -39,7 +41,8 @@ def get_os():
     os_node = str(subprocess.getoutput('uname -n'))
 
     osdict = dict(os=os_os, kernel=os_kernel, hw=os_hw, proc=os_proc, node=os_node)
-    return json.dumps(osdict)
+    #return json.dumps(osdict)
+    return osdict
 
 def default(message):
     return {"message ": message}
