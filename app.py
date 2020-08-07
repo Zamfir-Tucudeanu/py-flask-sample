@@ -79,9 +79,10 @@ def get_info(req):
     if req.lower() == 'fs': return get_fs()
     if req not in supported: return default(supported)
 
+## some comment
 
 if __name__ == "__main__":
     # dev
-    #app.run(debug=True, host='127.0.0.1', port=5000)
-    # prod
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True, host='127.0.0.1', port=5000)
+    #prod
+    ##app.run(host='0.0.0.0', port=5000)
